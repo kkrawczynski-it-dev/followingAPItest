@@ -1,3 +1,43 @@
+$(document).ready(function () {
+    var rootUrl = "https://kksandbox.sharepoint.com/sites/intra_uk";
+
+    $("#test").html(rootUrl);
+
+    // Get the count of content that the current user is following.
+    // The "types=14" parameter specifies all content types
+    // (documents = 2 + sites = 4 + tags = 8).
+    function getMyFollowedCount() {
+        $.ajax({
+            //url: rootUrl + "/my/followedcount(types=14)",
+            url: rootUrl + "/_api/social.following/my/followed(types=14)",
+
+            headers: {
+                "accept": "application/json;odata=verbose"
+            },
+            success: function (data) {
+                followedCount = data.d.FollowedCount;
+                getMyFollowedContent();
+                alert("Success!");
+            },
+            error: requestFailed
+        });
+    }
+    getMyFollowedCount();
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
 //var rootUrl = "https://kksandbox.sharepoint.com/sites/intra_uk";
 
 // Example from:
@@ -12,7 +52,22 @@
 // $(document).ready(function () {})
 // $("#test").html(followedList);
 
-
+// // Get the count of content that the current user is following.
+// // The "types=14" parameter specifies all content types
+// // (documents = 2 + sites = 4 + tags = 8).
+// function getMyFollowedCount() {
+//     $.ajax({
+//         url: followingManagerEndpoint + "/my/followedcount(types=14)",
+//         headers: {
+//             "accept": "application/json;odata=verbose"
+//         },
+//         success: function (data) {
+//             followedCount = data.d.FollowedCount;
+//             getMyFollowedContent();
+//         },
+//         error: requestFailed
+//     });
+// }
 
 
 
@@ -40,7 +95,7 @@
 //     }
 //     followingManagerEndpoint = decodeURIComponent(appweburl) + "/_api/social.following";
 //     getMyFollowedCount();
-    
+
 // });
 
 // // Get the count of content that the current user is following.
@@ -94,7 +149,7 @@
 //     //     followedList += "<p>The " + types[actor.ActorType] + ": \\"" +
 //     //     actor.Name + "\\"</p>";
 //     // } 
-    
+
 //     $("#test").html(followedList);
 // }
 
